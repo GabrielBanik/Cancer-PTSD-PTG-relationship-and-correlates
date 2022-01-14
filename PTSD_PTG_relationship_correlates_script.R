@@ -312,9 +312,9 @@ data$MMHHless <- with(data, Minimac1 + Minimac2 + Minimac4 + Minimac5 + Minimac7
 dat <- lapply(dat, function(x){cbind(x, MMHHless = rowSums(x[,c("Minimac1", "Minimac2", "Minimac4", "Minimac5",
                                                                 "Minimac7", "Minimac8", "Minimac14", "Minimac19", "Minimac25")], na.rm = TRUE))})
 
-data$MMAnx <- with(data, Minimac9 + Minimac10 + Minimac16 + Minimac19 + Minimac20 + Minimac21 + Minimac22 + Minimac29)
+data$MMAnx <- with(data, Minimac9 + Minimac10 + Minimac20 + Minimac21 + Minimac22 + Minimac29)
 
-dat <- lapply(dat, function(x){cbind(x, MMAnx = rowSums(x[,c("Minimac9", "Minimac10", "Minimac16", "Minimac19",
+dat <- lapply(dat, function(x){cbind(x, MMAnx = rowSums(x[,c("Minimac9", "Minimac10",  
                                                              "Minimac20", "Minimac21", "Minimac22", "Minimac29")], na.rm = TRUE))})
 
 data$MMFight <- with(data, Minimac3 + Minimac6 + Minimac12 + Minimac13 + Minimac17) 
@@ -413,7 +413,7 @@ MMHHless <- subset(data, select = c("Minimac1", "Minimac2", "Minimac4", "Minimac
                                     "Minimac14", "Minimac19", "Minimac25"))
 ci.reliability(MMHHless, type = "omega")
 ##anxious preocupation
-MMAnx <- subset(data, select = c("Minimac9", "Minimac10", "Minimac16", "Minimac19", "Minimac20", "Minimac21", 
+MMAnx <- subset(data, select = c("Minimac9", "Minimac10", "Minimac20", "Minimac21", 
                                  "Minimac22", "Minimac29"))
 ci.reliability(MMAnx, type = "omega")
 ##figthing spirit
@@ -983,8 +983,15 @@ lower2 <- c(socdemlower2, cancerlower2, numericlower2)
 upper1 <- c(socdemupper1, cancerupper1, numericupper1)
 upper2 <- c(socdemupper2, cancerupper2, numericupper2)
 
-ptg <- tibble(variables, r1, lower1, upper1, groups)
-ptsd <- tibble(variables, r2, lower2, upper2, groups)
+ptg <- tibble(order1, variables, r1, lower1, upper1, groups, subgroups1)
+names(ptg) <- c("order", "variables", "r", "lower", "upper", "groups", "subgroups")
+ptsd <- tibble(order2, variables, r2, lower2, upper2, groups, subgroups2)
+names(ptsd) <- c("order", "variables", "r", "lower", "upper", "groups", "subgroups")
+
+ptgptsd <- rbind(ptg,ptsd)
+
+ptgptsd <- ptgptsd %>% 
+  arrange(order)
 
 #plots for PTG and PTSD correlates 
 library(scales)
@@ -1017,7 +1024,7 @@ dev.off()
 
 #working table for values from correlation matrix
 z <- miceadds::micombine.cor(data_imp, 
-                             variables = c(13, 125, 11, 13, 15:20, 131:140), 
+                             variables = c(130, 125, 11, 13, 15:20, 131:140), 
                              conf.level=0.95, method="pearson", nested=FALSE, partial=NULL)
 v <- z$variable1
 v2 <- z$variable2
@@ -1194,14 +1201,13 @@ bf17 <- lapply(dat, function(x){correlationBF(x$PTSD,x$MMCogAvoid)})
 bf17mean <- lapply(bf17, function(x){extractBF(x)$bf})
 mean(unlist(lapply(bf17mean, function(x){mean(x)}))) #2.570
 
-bf11 <- lapply(dat, function(x){correlationBF(x$PTSD,x$Religiosity)})
-bf11mean <- lapply(bf11, function(x){extractBF(x)$bf})
-mean(unlist(lapply(bf11mean, function(x){mean(x)}))) #0.375
-
 bf9 <- lapply(dat, function(x){correlationBF(x$PTSD,x$Self_transcend)})
 bf9mean <- lapply(bf9, function(x){extractBF(x)$bf})
 mean(unlist(lapply(bf9mean, function(x){mean(x)}))) #0.215
 
+bf11 <- lapply(dat, function(x){correlationBF(x$PTSD,x$Religiosity)})
+bf11mean <- lapply(bf11, function(x){extractBF(x)$bf})
+mean(unlist(lapply(bf11mean, function(x){mean(x)}))) #0.375
 
 
 
