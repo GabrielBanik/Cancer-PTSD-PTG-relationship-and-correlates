@@ -758,9 +758,9 @@ pdf("PTG_PTSD_curvilinear model.pdf",height=10,width=16)
 ggplot(model2, aes(x=PTSD_avrg, y=PTG_avrg)) + 
   geom_point() +
   stat_smooth(se=T, method='lm', formula=y~poly(x,2), color = "#660033", fill = "#66CCCC") +
-  xlab("PTSD") +
+  xlab("PTSS") +
   ylab ("Posttraumatic growth") +
-  ggtitle("PTSD as a predictor of Posttraumatic growth") +
+  ggtitle("PTSS as a predictor of Posttraumatic growth") +
   theme_light() +
   theme(plot.title = element_text(size = 16, face = "bold"),
         axis.title.x = element_text(size = 12),
@@ -902,8 +902,8 @@ ggplot(data = PTG_PTSD, aes(x=PTSD_avrg, y=PTG_avrg, y)) +
   geom_smooth(color = "#660033", fill = "#66CCCC") +
   annotation_custom(r_anotation) +
   ylab("Posttraumatic growth") +
-  xlab("PTSD") +
-  ggtitle("Posttraumatic growth and PTSD") +
+  xlab("PTSS") +
+  ggtitle("Posttraumatic growth and PTSS") +
   theme(plot.title = element_text(size = 16, face = "bold"),
         axis.title.x = element_text(size = 12),
         axis.title.y = element_text(size = 12)) +
@@ -970,7 +970,7 @@ groups <- c("personal","personal","personal",
             "psychological", "psychological")
 
 subgroups1 <- rep("PTG", 24)
-subgroups2 <- rep("PTSD", 24)
+subgroups2 <- rep("PTSS", 24)
 
 
 order1 <- seq(1,48, by=2)
@@ -1011,8 +1011,8 @@ ggplot(data=ptgptsd, aes(x=variables, y=r, ymin=lower, ymax=upper, color = subgr
   theme(axis.title.x = element_text(hjust= 0.5)) + # adjust axis title position
   theme(axis.title.y = element_text(size = 14)) + # adjust axis title size
   theme(plot.title = element_text(hjust = 0.5)) + # adjust title position
-  labs(title = "Posttraumatic growth (PTG) and PTSD correlates",
-       subtitle = "Pearson Correlation between PTG and PTSD: 0.302 [.13,.46]") +
+  labs(title = "Posttraumatic growth (PTG) and PTSS correlates",
+       subtitle = "Pearson Correlation between PTG and PTSS: 0.302 [.13,.46]") +
   theme(plot.title = element_text(hjust = 0.5, face = "bold"),
         plot.subtitle = element_text(hjust = 0.5, size = 9, face = "bold.italic", color = "red")) +
   labs(col="Posttraumatic\nreactions") + # change name of legend 1 (\n) in two lines 
